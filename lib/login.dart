@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -22,7 +23,7 @@ class _LoginState extends State<Login> {
   Future userLogin() async {
     //Login API URL
     //use your local IP address instead of localhost or use Web API
-    String url = "http://192.168.18.5/Web-fitbyme/API/login.php";
+    String url = "http://192.168.43.205/Web-fitbyme/API/login.php";
 
     // Showing LinearProgressIndicator.
     setState(() {
@@ -44,6 +45,8 @@ class _LoginState extends State<Login> {
 
       // Check Login Status
       if (msg['loginStatus'] == true) {
+        SharedPreferences preferences = await SharedPreferences.getInstance();
+        preferences.setString('email', email.text);
         Fluttertoast.showToast(
             msg: "Login Successfully",
             toastLength: Toast.LENGTH_SHORT,
@@ -287,7 +290,7 @@ class _LoginState extends State<Login> {
                               },
                             text: "Sign Up",
                             style: TextStyle(
-                              color: Colors.blue,
+                              color: Colors.indigo,
                             ),
                           ),
                         ],
